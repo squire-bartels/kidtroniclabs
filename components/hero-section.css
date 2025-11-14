@@ -1,14 +1,33 @@
-/* Hero section styles - floating animations removed */
+/* Hero section styles - optimized for image display */
 
 .embla {
   overflow: hidden;
+  width: 100%;
 }
 
 .embla__container {
   display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing, 1rem) * -1);
 }
 
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
+  padding-left: var(--slide-spacing, 1rem);
+  position: relative;
+}
+
+/* Ensure images render properly */
+.embla__slide img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Prevent image dragging */
+.embla__slide img {
+  pointer-events: none;
+  user-select: none;
 }

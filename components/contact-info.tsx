@@ -54,8 +54,8 @@ export function ContactInfo() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                    <Link href="mailto:kidtronic10@gmail.com" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
-                      kidtronic10@gmail.com
+                    <Link href="mailto:kidtroniclabs@gmail.com" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
+                      kidtroniclabs@gmail.com
                     </Link>
                   </div>
                 </div>

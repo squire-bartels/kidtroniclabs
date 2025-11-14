@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
+import "./hero-section.css"
 
 // Slide data
 const slides = [
@@ -43,9 +44,17 @@ const slides = [
 export function HeroSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
-    duration: 60
+    duration: 60,
+    dragFree: false,
+    containScroll: 'trimSnaps'
   })
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
+
+  // Handle image loading
+  const handleImageLoad = (slideId: number) => {
+    setImagesLoaded(prev => new Set([...prev, slideId]))
+  }
 
   // Button action handlers
   const handleButtonClick = (action: string) => {
@@ -112,21 +121,36 @@ export function HeroSection() {
           <div className="embla" ref={emblaRef}>
             <div className="embla__container flex">
               {slides.map((slide) => (
-                <div key={slide.id} className="embla__slide flex-[0_0_100%] relative">
-                  <div className="relative py-16 lg:py-24 px-8 flex items-center justify-center overflow-hidden">
+                <div key={slide.id} className="embla__slide flex-[0_0_100%] relative min-h-[500px] lg:min-h-[600px]">
+                  <div className="relative h-full py-16 lg:py-24 px-8 flex items-center justify-center overflow-hidden">
                     {/* Optimized Background Image */}
-                    <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-gray-900">
+                      {/* Loading shimmer effect */}
+                      {!imagesLoaded.has(slide.id) && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse" />
+                      )}
+                      
                       <Image
                         src={slide.backgroundImage}
                         alt={`${slide.title} background`}
                         fill
-                        priority={slide.id === 1} // Prioritize first slide
-                        quality={85}
-                        sizes="100vw"
-                        className="object-cover opacity-40"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        priority={slide.id === 1}
+                        quality={90}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                        className={`object-cover object-center transition-opacity duration-500 ${
+                          imagesLoaded.has(slide.id) ? 'opacity-40' : 'opacity-0'
+                        }`}
+                        unoptimized={slide.backgroundImage.includes('.gif')}
+                        onLoad={() => handleImageLoad(slide.id)}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          // Show fallback gradient
+                        }}
                       />
+                      
+                      {/* Fallback gradient - always present */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10" />
                     </div>
                     
                     {/* Grid Overlay */}

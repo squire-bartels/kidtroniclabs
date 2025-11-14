@@ -24,11 +24,19 @@ export const metadata: Metadata = {
   generator: "v0.app",
   keywords: "STEM education, robotics, coding, AI, engineering, kids, K-12, learning",
   authors: [{ name: "Kidtronic" }],
+  icons: {
+    icon: [
+      { url: "/fav3.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/kidtronic (6).png",
+  },
   openGraph: {
     title: "Kidtronic - STEM Education for Young Minds",
     description:
       "Igniting curiosity, creativity & innovation in young learners through hands-on programs in robotics, coding, AI, and engineering.",
     type: "website",
+    images: ["/kidtronic (6).png"],
   },
 }
 

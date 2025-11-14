@@ -8,12 +8,9 @@ import { useRef } from "react"
 import LogoLoop from "@/components/ui/logo-loop"
 
 const partners = [
-  { src: "/generic-company-logo.png", alt: "Partner 1" },
-  { src: "/generic-company-logo.png", alt: "Partner 2" },
-  { src: "/generic-company-logo.png", alt: "Partner 3" },
-  { src: "/generic-company-logo.png", alt: "Partner 4" },
-  { src: "/generic-company-logo.png", alt: "Partner 5" },
-  { src: "/generic-company-logo.png", alt: "Partner 6" },
+  { src: "/partner-1.jpg", alt: "Educational Partner" },
+  { src: "/partner-2.jpeg", alt: "Technology Partner" },
+  { src: "/partner-3.png", alt: "STEM Education Partner" },
 ]
 
 export function PartnersTestimonials() {
@@ -71,7 +68,16 @@ export function PartnersTestimonials() {
               animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              <Button size="lg" className="bg-white hover:bg-gray-200 text-black px-8">
+              <Button 
+                size="lg" 
+                className="bg-white hover:bg-gray-200 text-black px-8"
+                onClick={() => {
+                  const whatsappNumber = "+233599717102"
+                  const message = "Hi! I'm interested in enrolling in Kidtronic's STEM programs. Could you please provide more information?"
+                  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\s+/g, '')}?text=${encodeURIComponent(message)}`
+                  window.open(whatsappUrl, '_blank')
+                }}
+              >
                 Enroll Now
               </Button>
             </motion.div>

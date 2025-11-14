@@ -27,8 +27,8 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-black">Email Us</h3>
-                  <Link href="mailto:kidtronic10@gmail.com" className="text-gray-600 hover:text-black transition-colors">
-                    kidtronic10@gmail.com
+                  <Link href="mailto:kidtroniclabs@gmail.com" className="text-gray-600 hover:text-black transition-colors">
+                    kidtroniclabs@gmail.com
                   </Link>
                 </div>
               </div>
